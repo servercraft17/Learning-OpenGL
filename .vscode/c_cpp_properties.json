@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/external/SDL/include",
+                "${workspaceFolder}/external/assimp/include",
+                "${workspaceFolder}/external/zlib",
+                "${workspaceFolder}/external/boost",
+                "${workspaceFolder}/external/glew/include"
+            ],
+            "defines": []
+        }
+    ],
+    "version": 4
+}
