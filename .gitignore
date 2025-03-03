@@ -1,0 +1,27 @@
+# File Extensions
+*.o
+*.exe
+*.lib
+*.a
+*.so
+*.dll
+*.pdb
+
+# Directories
+installation/
+build/
+bin/
+external/SDL/
+external/glew/
+external/SDL_ttf/
+external/assimp/
+external/boost/
+external/SDL_shadercross/
+external/SPIRV-Cross/
+external/DirectXShaderCompiler/
+external/zlib/
+# Specific Files
+src/raylib/raylib.h
+src/raylib/raymath.h
+src/raylib/rlgl.h
+log.txt
