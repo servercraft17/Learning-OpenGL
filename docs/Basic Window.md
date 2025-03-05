@@ -13,11 +13,8 @@ First we have to initialize SDL and [[GLEW]].
 We Initialize [[SDL]] and a window as normal in [[SDL]], but the window has to have the OpenGL flag.
 ```C++
 if (!SDL_Init(SDL_INIT_VIDEO)) {
-
-SDL_Log("SDL Failed to initialize: %s", SDL_GetError());
-
-return 1;
-
+	SDL_Log("SDL Failed to initialize: %s", SDL_GetError());
+	return 1;
 }
 // Formatting like this only so it doesn't look ass in obsidian.
 // its formatted correctly in the main.cpp source file.
@@ -69,6 +66,11 @@ if (glewError != GLEW_OK) {
 		glewGetErrorString(glewError));
 	return 1;
 }
+```
+
+Now that [[GLEW]] is initialized we can use all the OpenGL functions to our hearts content. So the first OpenGL function we'll be using is [[glViewport]] to tell OpenGL the size of the rendering window. The first two parameters set the location of the lower left corner of the window, we can just use `(0,0)`, and the second and third arguments are the width and height of the rendering window in pixels, we can use `(800, 600)`, or the same as our window.
+```C++
+glViewport(0,0,800,600);
 ```
 
 # 2. Game Loop
@@ -134,3 +136,5 @@ SDL_Quit();
 ```
 # Compiling
 Just make sure you link with OpenGL with the `-lOpenGL32` flag on Windows or `-lGL -lGLU` on Linux and when linking [[GLEW]] to your program, make sure you also link with the static library as well, it will be called `glew32.lib` on Windows and `libGLEW.a` on Linux and make sure its the right static library, depending on how you compile [[GLEW]] there may be two static libraries, one for static linking, and a second for dynamically linking with it's shared library, usually one for static linking will have a lowercase `s` at the end before the file extension.
+
+# Next: [[Basic Triangle]] 

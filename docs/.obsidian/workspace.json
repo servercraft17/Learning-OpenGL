@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "282c27c4d3c91682",
+        "id": "8003891918fca11f",
         "type": "tabs",
         "children": [
           {
-            "id": "ec657a7482f3855e",
+            "id": "360c57b18051cb30",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "GLEW.md",
+                "file": "Basic Triangle.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GLEW"
+              "title": "Basic Triangle"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "9896f4a353c56fad",
@@ -163,7 +164,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 527.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,9 +176,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "50b0d6ae58f1d64b",
+  "active": "360c57b18051cb30",
   "lastOpenFiles": [
     "Basic Window.md",
+    "Basic Triangle.md",
     "GLEW.md",
     "2. Game Loop.md",
     "Compilation.md",

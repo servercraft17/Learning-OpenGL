@@ -8,6 +8,10 @@
 #include <GL/glut.h>
 
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+
 void HandleEvent(SDL_Event& event);
 void Update();
 void Render();
@@ -24,7 +28,7 @@ int main() {
         return 1;
     }
 
-    window = SDL_CreateWindow("Learning OpenGL", 800, 600, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("Learning OpenGL", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (!window) {
         SDL_Log("SDL Failed to create a window: %s", SDL_GetError());
         return 1;
@@ -52,6 +56,9 @@ int main() {
         return 1;
     }
 
+    // Tell OpenGL the size of our window.
+    glViewport(0,0,WINDOW_WIDTH, WINDOW_HEIGHT);
+
     // Set Vsync
     if (!SDL_GL_SetSwapInterval(0)) 
         SDL_Log("WARNING: Failed to set vsync. %s", SDL_GetError());
@@ -70,12 +77,12 @@ int main() {
     SDL_Quit();
 }
 
-void HandleEvent(SDL_Event& event) {
+void HandleEvent(SDL_Event &event) {
     if (event.type == SDL_EVENT_QUIT || (event.type == SDL_EVENT_KEY_DOWN && event.key.key == SDLK_ESCAPE)) {
         SDL_Log("Exiting...");
         should_quit=true;
         return;
-    }   
+    }
 }
 
 void Update() {
