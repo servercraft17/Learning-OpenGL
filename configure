@@ -1,3 +1,4 @@
+#! /usr/bin/bash
 sudo apt install libglut-dev
 
 sudo apt-get install build-essential git make \

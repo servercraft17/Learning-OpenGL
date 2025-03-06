@@ -6,15 +6,19 @@ include buildsys/cfg.mk
 include buildsys/directory-vars.mk
 include buildsys/common.mk
 
-SRC:= $(call rwildcard,$(src_dir),$(addprefix *,$(src_file_exts)))
+SRC:= $(filter-out $(call rwildcard,$(src_dir),*.main.cpp),$(call rwildcard,$(src_dir),$(addprefix *,$(src_file_exts))))
 OBJ:= $(call rsubsuffix,$(src_file_exts),.o,$(addprefix $(build_dir)/,$(notdir $(SRC))))
+
+EXECS:= $(addprefix ./$(bin_dir)/,$(basename $(basename $(notdir $(wildcard src/*.main.cpp)))))
 
 dep_list :=
 clean_list := 
 help_text_list :=
 
-all: ./$(bin_dir)/$(exec_name)
-	
+#all: ./$(bin_dir)/$(exec_name)
+
+all: ./$(build_dir) ./$(bin_dir) $(EXECS)
+
 # Include deps
 include buildsys/assimp-dep.mk
 include buildsys/zlib-dep.mk
@@ -40,11 +44,17 @@ ifneq ($(OS),Windows_NT)
 	linker_flags += -Wl,-rpath='$$ORIGIN'
 endif
 
+./$(bin_dir)/%: ./$(build_dir)/%.main.o ./$(bin_dir) ./$(build_dir) $(dep_list) $(OBJ) 
+	$(CXXC) $< $(OBJ) -o $@ $(linker_flags) $(CFLAGS)
 
-./$(bin_dir)/$(exec_name): ./$(bin_dir) ./$(build_dir) $(dep_list) $(OBJ) 
-	$(CXXC) $(OBJ) -o $@ $(linker_flags) $(CFLAGS)
+#./$(bin_dir)/$(exec_name): ./$(bin_dir) ./$(build_dir) $(dep_list) $(OBJ) 
+#	$(CXXC) $(OBJ) -o $@ $(linker_flags) $(CFLAGS)
 
-./$(build_dir)/%.o: ./src/%.cpp
+./$(build_dir)/%.o: ./src/common/%.cpp
+	@$(call mkdir,$(build_dir))
+	$(CXXC) -c $< -o $@ $(inc) $(CFLAGS)
+
+./$(build_dir)/%.main.o: ./src/%.main.cpp
 	@$(call mkdir,$(build_dir))
 	$(CXXC) -c $< -o $@ $(inc) $(CFLAGS)
 

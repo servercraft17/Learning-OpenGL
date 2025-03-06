@@ -12,3 +12,7 @@ Just run `make` or `make run` and everything will be built for you, all dependen
 ## Linux
 Run `./configure` then run `make` or `make run` and everything will be build for you, all dependencies and everything.
 In theory you shouldn't have to run `./configure` but I've had issues with it on linux.
+
+# Adding more example programs
+To add more example programs just create a new file in the `src` directory with the file extension `.main.cpp`.
+Anything that is used by multiple example should be put into the common directory and shouldn't have the `.main.cpp` extension.

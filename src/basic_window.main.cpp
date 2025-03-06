@@ -28,7 +28,7 @@ int main() {
         return 1;
     }
 
-    window = SDL_CreateWindow("Learning OpenGL", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("Learning OpenGL: Basic Window", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (!window) {
         SDL_Log("SDL Failed to create a window: %s", SDL_GetError());
         return 1;
