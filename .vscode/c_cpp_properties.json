@@ -8,7 +8,8 @@
                 "${workspaceFolder}/external/assimp/include",
                 "${workspaceFolder}/external/zlib",
                 "${workspaceFolder}/external/boost",
-                "${workspaceFolder}/external/glew/include"
+                "${workspaceFolder}/external/glew/include",
+                "${workspaceFolder}/build"
             ],
             "defines": []
         }

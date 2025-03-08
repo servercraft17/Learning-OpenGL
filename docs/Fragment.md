@@ -1,0 +1,1 @@
+A fragment in OpenGL is all the data required for OpenGL to render a single pixel.

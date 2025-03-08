@@ -22,7 +22,7 @@ int main() {
     
     std::ofstream generated(output_file);
 
-    std::string gen_content = "#ifndef SS_SHADERS_H\n#define SS_SHADERS_H\nnamespace SS_Shaders {\n";
+    std::string gen_content = "#ifndef SS_SHADERS_H\n#define SS_SHADERS_H\nnamespace Shaders {\n";
 
     for (const auto & entry : std::filesystem::directory_iterator(shader_dir)) {
         if (entry.path().extension() != ".glsl") continue;
