@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 221.5,
     "collapsed": true
   },
   "right": {
@@ -181,13 +181,15 @@
   },
   "active": "ec657a7482f3855e",
   "lastOpenFiles": [
-    "[].md",
+    "Pasted image 20250309132054.png",
+    "Pasted image 20250309132046.png",
+    "Basic Window.md",
     "Basic Triangle.md",
+    "[].md",
     "GLEW.md",
     "Fragment.md",
     "Fragment Shader.md",
     "another game ide.a.md",
-    "Basic Window.md",
     "2. Game Loop.md",
     "Compilation.md",
     "SDL.md"

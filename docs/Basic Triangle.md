@@ -80,3 +80,76 @@ if (!compilation_success) {
 	SDL_Log("ERROR: Failed to compile vertex shader. %s", compilation_log);
 }
 ```
+## Fragment Shader
+The *fragment shader* tells the GPU how to color each pixels, by creating **fragments**, which are just the data required to draw each pixel to the screen. The fragment shader outputs the color of the fragment. Our fragment shader will look like this.
+```c
+#version 330 core
+// Specifies that this will be an output of the shader.
+out vec4 FragColor;
+
+void main()
+{
+	// Set every pixel to the same color.
+	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+}
+```
+
+And now we load our fragment shader just like we did the vertex shader.
+```C++
+unsigned fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+glShaderSource(fragmentShader, 1, &Shaders::fragment_basic_triangle, NULL);
+glCompileShader(fragmentShader);
+
+int compilation_success;
+char compilation_log[1024];
+glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &compilation_success);
+if (!compilation_success) {
+	// Second param is just the size of your char array.
+	// And third param you can just leave NULL.
+	glGetShaderInfoLog(fragmentShader, 1024, NULL, compilation_log);
+	SDL_Log("ERROR: Failed to compile fragment shader. %s", compilation_log);
+}
+```
+
+## Shader Programs
+Now that we have loaded our shaders, we can't use them.. At least not until we link them to a shader program. A shader program is essentially the '*executable*' while the compiled shaders are like the '*objects*', similar with compiling a C program. To use the shaders we need the executable and for that we need to link the objects. Creating and linking the program is easy though. To create the program we use `glCreateProgram()` that returns an ID that we use to reference it. To link it we first attach the shaders to it using `glAttachShader()` then we link it using `glLinkProgram()`.
+```C++
+unsigned sp = glCreateProgram();
+glAttachShader(sp, vertexShader);
+glAttachShader(sp, fragmentShader);
+glLinkProgram(sp);
+```
+
+But we don't want to use the shader program if it failed to link, we can check that the same way we did the shader compilation but this time using the functions `glGetProgramiv()` and `glGetProgramInfoLog()`.
+```C++
+int link_success;
+char link_log[1024];
+glGetProgramiv(sp, GL_LINK_STATUS, &link_success);
+if (!link_success) {
+	glGetProgramInfoLog(sp, 1024, NULL, link_log);
+	SDL_Log("ERROR: Failed to link shader program. %s", link_log);
+}
+```
+
+What we're left with is a program object that we can activate using `glUseProgram()`!
+```C++
+glUseProgarm(sp);
+```
+
+We also don't need the shader objects anymore so we can delete them.
+```C++
+glDeleteShader(vertexShader);
+glDeleteShader(fragmentShader);
+```
+
+Now we've given the GPU our vertex data *(which is in [[VRAM]])* and we've told the GPU how it should process that data. *(using the vertex and fragment shaders)* So we're almost there, but the GPU still doesn't know how it should interpret the vertex data nor how it should said data to the shader's attributes. We will tell OpenGL how to do that.
+
+## Linking Vertex Attributes
+The vertex shader allows us to specify any input we want in the form of vertex attributes, in other words, we can just give the vertex shader what ever data we want and it will just take it. This is nice and makes it very flexible, but means that we have to tell it what the data we give it means.
+
+We'll format our vertex data the same way the people at [LearnOpenGL](https://learnopengl.com) did because I couldn't be bothered to make my own image for this.
+![vertex data format](https://learnopengl.com/img/getting-started/vertex_attribute_pointer.png "vertex data format")
+- The position data is stored as 32-bit (4 byte) floating point values.
+- Each position is composed of 3 of those values.
+- There is no space (or other values) between each set of 3 values. The values are tightly packed in the array.
+- The first value in the data is at the beginning of the buffer.

@@ -123,17 +123,48 @@ int main() {
     glCompileShader(vertexShader);
 
     // Check if compilation failed.
-    int compilation_success;
-    char compilation_log[1024];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &compilation_success);
-    if (!compilation_success) {
+    int success;
+    char _log[1024];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
         // Second param is just the size of your char array.
         // And third param you can just leave NULL.
-        glGetShaderInfoLog(vertexShader, 1024, NULL, compilation_log);
-        SDL_Log("ERROR: Failed to compile vertex shader. %s", compilation_log);
+        glGetShaderInfoLog(vertexShader, 1024, NULL, _log);
+        SDL_Log("ERROR: Failed to compile vertex shader. %s", _log);
     }
 
+    // Load Fragment Shader
+    unsigned fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &Shaders::fragment_basic_triangle, NULL);
+    glCompileShader(fragmentShader);
 
+    success = 0;
+    memset(&_log, 0, 1024);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        // Second param is just the size of your char array.
+        // And third param you can just leave NULL.
+        glGetShaderInfoLog(fragmentShader, 1024, NULL, _log);
+        SDL_Log("ERROR: Failed to compile fragment shader. %s", _log);
+    }
+
+    // Create & Link Shader Program
+    unsigned sp = glCreateProgram();
+    glAttachShader(sp, vertexShader);
+    glAttachShader(sp, fragmentShader);
+    glLinkProgram(sp);
+
+    success = 0;
+    memset(&_log, 0, 1024);
+    glGetProgramiv(sp, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(sp, 1024, NULL, _log);
+        SDL_Log("ERROR: Failed to link shader program. %s", _log);
+    }
+
+    glUseProgram(sp);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
 // 2. Game Loop
     while (!should_quit) {
